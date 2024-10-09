@@ -55,8 +55,8 @@ gem 'rack-cors'
 
 gem "graphql", "~> 2.3"
 
-gem "graphiql-rails", "~> 1.10"
-
 gem 'propshaft'
 
 gem 'sprockets-rails', '~> 3.5', '>= 3.5.2'
+
+gem "graphiql-rails", "~> 1.10"
