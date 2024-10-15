@@ -1,7 +1,7 @@
 # Rails.application.routes.draw do
 #   # GraphQL route
 #   post "/graphql", to: "graphql#execute"
-#   get "/graphql", to: "graphql#execute" # Allows GraphiQL to send GET requests to test queries
+#   get "/graphql", to: "graphql#execute"
 
 #   # GraphiQL interface (only in development)
 #   if Rails.env.development?
@@ -23,14 +23,16 @@
 # end
 
 
-
 Rails.application.routes.draw do
-  # Root route for a welcome message
-  root to: -> (env) { [200, { "Content-Type" => "application/json" }, [{ message: "Welcome to the Earthquake API" }.to_json]] }
+  # Set the root route to a specific controller action
+  root "home#index"
+
+  # Add a route for the home index if needed
+  get "home/index"
 
   # GraphQL route
   post "/graphql", to: "graphql#execute"
-  get "/graphql", to: "graphql#execute" # Allows GraphiQL to send GET requests to test queries
+  get "/graphql", to: "graphql#execute"
 
   # GraphiQL interface (only in development)
   if Rails.env.development?
@@ -50,3 +52,5 @@ Rails.application.routes.draw do
     end
   end
 end
+
+# get '/favicon.ico', to: ->(_) { [204, {}, []] }
