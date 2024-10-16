@@ -6,6 +6,10 @@ gem "rails", "~> 7.2.1"
 # Use postgresql as the database for Active Record
 gem "pg", "~> 1.1"
 
+gem 'net-pop', github: 'ruby/net-pop'
+
+gem 'net-protocol'
+
 # Use the Puma web server [https://github.com/puma/puma]
 gem "puma", ">= 5.0"
 
