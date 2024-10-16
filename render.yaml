@@ -1,8 +1,14 @@
 databases:
-  - name: mysite
-    databaseName: mysite
-    user: mysite
-    plan: free
+- name: mysite
+  databaseName: mysite_0eur
+  user: mysite
+  plan: free
+  region: oregon
+  ipAllowList:
+  - source: 0.0.0.0/0
+    description: everywhere
+  postgresMajorVersion: "16"
+version: "1"
 
 services:
   - type: web
@@ -10,8 +16,8 @@ services:
     runtime: ruby
     plan: free
     buildCommand: "./bin/render-build.sh"
-  
     startCommand: "bundle exec rails server"
+    
     envVars:
       - key: DATABASE_URL
         fromDatabase:
