@@ -23,7 +23,7 @@ Rails.application.routes.draw do
   # API namespace for earthquakes (v1)
   namespace :api do
     namespace :v1 do
-      resources :earthquakes
+      resources :earthquakes, only: [:index, :show, :create, :update, :destroy]
     end
   end
 end
