@@ -1,3 +1,10 @@
+GIT
+  remote: https://github.com/ruby/net-pop.git
+  revision: e8d0afe2773b9eb6a23c39e9e437f6fc0fc7c733
+  specs:
+    net-pop (0.1.2)
+      net-protocol
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -96,6 +103,7 @@ GEM
     doorkeeper (5.7.1)
       railties (>= 5)
     drb (2.2.1)
+    error_highlight (0.6.0)
     erubi (1.13.0)
     faker (3.4.2)
       i18n (>= 1.8.11, < 2)
@@ -142,8 +150,6 @@ GEM
     msgpack (1.7.3)
     net-imap (0.4.16)
       date
-      net-protocol
-    net-pop (0.1.2)
       net-protocol
     net-protocol (0.2.2)
       timeout
@@ -304,10 +310,13 @@ DEPENDENCIES
   debug
   devise
   doorkeeper
+  error_highlight (~> 0.6.0)
   faker
   graphiql-rails (~> 1.10)
   graphql (~> 2.3)
   kaminari
+  net-pop!
+  net-protocol
   pg (~> 1.1)
   propshaft
   puma (>= 5.0)
