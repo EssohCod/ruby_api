@@ -4,7 +4,7 @@
 This project is hosted here: 
 See Postman Documentation here: https://documenter.getpostman.com/view/37174734/2sAXxMgDSf
 
-Host url: https://mysite-8okb.onrender.com
+Host url: 
 
 ## Task
 The task is to build a GraphQL-based Earthquake API using Ruby on Rails, which will allow users to query and mutate earthquake data. This includes features like retrieving lists of earthquakes, querying individual earthquakes, and managing earthquake records via GraphQL. Additionally, OAuth authentication with Doorkeeper is implemented to secure API access, and the project supports pagination and Redis caching for performance optimization.
@@ -53,12 +53,30 @@ Run the Server: Start the Rails server using:
     rails server
 
 Accessing GraphiQL (Development Only): In development mode, you can use the GraphiQL interface to test your GraphQL queries at:
-    http://localhost:3000/graphiql
+    
     
 
 
 ## Usage
 GraphQL Queries:
+
+GET BY ID
+curl -X POST http://localhost:3000/graphql -H "Content-Type: application/json" -H "Authorization: Bearer MpA3cQqX2uMJ_SQojtyQ9FH8Xf8ysLBlgUpzRsKzIdg" -d "{\"query\":\"query { earthquake(id: 2) { id location magnitude depth } }\"}"
+
+GET ALL
+curl -X POST http://localhost:3000/graphql -H "Content-Type: application/json" -H "Authorization: Bearer MpA3cQqX2uMJ_SQojtyQ9FH8Xf8ysLBlgUpzRsKzIdg" -d "{\"query\":\"query { earthquakes { id location magnitude depth } }\"}"
+
+CREATE
+curl -X POST http://localhost:3000/graphql -H "Content-Type: application/json" -H "Authorization: Bearer MpA3cQqX2uMJ_SQojtyQ9FH8Xf8ysLBlgUpzRsKzIdg" -d "{\"query\":\"mutation { createEarthquake(input: { location: \\\"New York\\\", magnitude: 5.2, depth: 10.0, occurredAt: \\\"2024-10-16T12:00:00Z\\\" }) { earthquake { id location magnitude depth occurredAt } } }\"}"
+
+DELETE
+curl -X POST http://localhost:3000/graphql -H "Content-Type: application/json" -H "Authorization: Bearer MpA3cQqX2uMJ_SQojtyQ9FH8Xf8ysLBlgUpzRsKzIdg" -d "{\"query\":\"mutation { deleteEarthquake(input: { id: 1 }) { success message } }\"}"
+
+UPDATE
+curl -X POST http://localhost:3000/graphql -H "Content-Type: application/json" -H "Authorization: Bearer MpA3cQqX2uMJ_SQojtyQ9FH8Xf8ysLBlgUpzRsKzIdg" -d "{\"query\":\"mutation { updateEarthquake(input: { id: 3, location: \\\"Los Angeles\\\", magnitude: 4.8, depth: 12.0 }) { earthquake { id location magnitude depth } } }\"}"
+
+
+Or run the graphql interface url and test with your browser => http://localhost:3000/graphiql
 GET 
 {
   earthquakes {
@@ -132,46 +150,39 @@ mutation {
 }
 
 POSTMAN CREDENTIALS:
-Obtain an OAuth Access Token
-    You need to send a request to the token endpoint (usually /oauth/token) to obtain an access token. The payload depends on the grant type you're using, such as client credentials, password, or refresh token.
-        Open Postman.
-        Create a POST request to the /oauth/token endpoint:
-            POST /oauth/token
-    
-    In the Body tab of Postman, set the request type to x-www-form-urlencoded and add the following parameters (depending on your grant type):
-        For password grant:
-            Key	````````Value
-            grant_type	password
-            client_id	your_client_id
-            client_secret	your_client_secret
-            username	your_user_email
-            password	your_user_password
+grant_type client_credentials
+client_id fWLW4_YvcPGo8d0gWKSA_P90c4xXtS3UxGrBklkYrOg
+client_secret TQ70vVaxDb6SWZUu5HgVGQVy5oFc1Fl-yq_OIdfGqsM
+scope public
 
-            For client credentials grant:
-                Key	            Value
-                grant_type	    client_credentials
-                client_id	    your_client_id
-                client_secret	your_client_secret
-
-            Send the request, and in the response, you should receive an access_token.
-    
-    Use the Access Token:
-        Now, you can access the earthquake API by passing the access token in the Authorization header as a Bearer token.
-
-    Accessing Earthquake Data with Postman:
-        Once you've obtained the OAuth token, follow these steps to access earthquake data.
-
-After Login 
+AUTHENTICATION
 {
-    "access_token": "VXSoSB1YZheo8sofjV-z7_c5iI3hTT_x1HIf6hKSYb0",
+    "access_token": "MpA3cQqX2uMJ_SQojtyQ9FH8Xf8ysLBlgUpzRsKzIdg",
     "token_type": "Bearer",
     "expires_in": 7200,
     "scope": "public",
-    "created_at": 1728153075
+    "created_at": 1729048669
 }
 
+After Authenication Run The Following 
+curl -X GET http://localhost:3000/api/v1/earthquakes
+
+curl -X GET http://localhost:3000/api/v1/earthquakes?page=2
+
+curl -X GET http://localhost:3000/api/v1/earthquakes/1
+
+curl -X PUT http://localhost:3000/api/v1/earthquakes/1 -H "Content-Type: application/json" -H "Authorization: Bearer MpA3cQqX2uMJ_SQojtyQ9FH8Xf8ysLBlgUpzRsKzIdg" -d "{\"earthquake\": {\"magnitude\": 6.0}}"
+
+curl -X POST http://localhost:3000/api/v1/earthquakes -H "Content-Type: application/json" -H "Authorization: Bearer MpA3cQqX2uMJ_SQojtyQ9FH8Xf8ysLBlgUpzRsKzIdg" -d "{\"earthquake\": {\"location\": \"California\", \"magnitude\": 5.4, \"depth\": 10.5, \"occurred_at\": \"2023-10-15T12:30:00Z\"}}"
+
+curl -X PATCH http://localhost:3000/api/v1/earthquakes/1 -H "Content-Type: application/json" -H "Authorization: Bearer MpA3cQqX2uMJ_SQojtyQ9FH8Xf8ysLBlgUpzRsKzIdg" -d "{\"earthquake\": {\"magnitude\": 6.2}}"
+
+curl -X DELETE http://localhost:3000/api/v1/earthquakes/1 -H "Authorization: Bearer MpA3cQqX2uMJ_SQojtyQ9FH8Xf8ysLBlgUpzRsKzIdg"
+
+Or check with postman using the following
+
 {
-    "id": 1,
+    "id": ,
     "location": "San Francisco",
     "magnitude": "5.5",
     "depth": "10.0",
